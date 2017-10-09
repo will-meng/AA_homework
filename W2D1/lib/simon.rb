@@ -1,5 +1,14 @@
+require 'colorize'
+
 class Simon
-  COLORS = %w(red blue green yellow)
+  COLORS = %w[red blue green yellow]
+  COLORED = ['red'.colorize(:red),
+            'blue'.colorize(:blue),
+            'green'.colorize(:green),
+            'yellow'.colorize(:yellow)]
+  COLOR_HASH = { red: 'red', r: 'red', blue: 'blue', b: 'blue',
+                 green: 'green', g: 'green', yellow: 'yellow', y: 'yellow' }
+
 
   attr_accessor :sequence_length, :game_over, :seq
 
@@ -11,31 +20,44 @@ class Simon
 
   def play
     take_turn until game_over
+    game_over_message
+    reset_game
   end
 
   def take_turn
-      add_random_color
-      show_sequence
-      require_sequence
-      
-      round_success_message
+    show_sequence
+    require_sequence
+    return if game_over
+    round_success_message
+    @sequence_length += 1
   end
 
   def show_sequence
+    add_random_color
+    puts "Prepare for round \##{sequence_length}..."
+    sleep(2)
+    system 'clear'
     seq.each do |color|
+      puts COLORED[COLORS.index(color)]
+      sleep(0.75)
       system 'clear'
-      puts color
-      sleep(1)
+      sleep(0.25)
     end
   end
 
   def require_sequence
     seq.each_with_index do |color, i|
-      print "What is color \##{i + 1}: "
-      answer = gets.chomp.strip.downcase
-      unless answer == color
+      answer = nil
+      loop do
+        print "What is color \##{i + 1}: "
+        answer = gets.chomp.strip.downcase
+        break if COLOR_HASH.keys.include?(answer.to_sym)
+        puts "Invalid color. Please try again."
+      end
+
+      unless COLOR_HASH[answer.to_sym] == color
         @game_over = true
-        return
+        break
       end
     end
   end
@@ -46,7 +68,6 @@ class Simon
 
   def round_success_message
     puts "Round #{sequence_length} complete! Prepare for next round!"
-    sleep(2)
   end
 
   def game_over_message
@@ -54,6 +75,10 @@ class Simon
   end
 
   def reset_game
-
+    @sequence_length = 1
+    @game_over = false
+    @seq = []
   end
 end
+
+Simon.new.play if $PROGRAM_NAME == __FILE__
