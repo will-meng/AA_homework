@@ -42,7 +42,7 @@ class UsersController < ApplicationController
     if user.update(user_params)
       redirect_to user_url(user.id)
     else
-      render json: 'Cannot find that user'
+      render json: 'Could not update user'
     end
   end
 

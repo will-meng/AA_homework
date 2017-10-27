@@ -2,24 +2,23 @@
 
 <form action="<%=action_url%>" method="post">
 <% if action == :edit %>
-  <input type="hidden" name="_method" method="patch">
+  <input type="hidden" name="_method" value="patch">
 <% end %>
 
 <input type="hidden"
        name="authenticity_token"
-       value="<% form_authenticity_token %>">
+       value="<%form_authenticity_token%>">
 
 <label for="username">Username: </label>
 <input type="text" id="username"
        name="user[username]"
-       value="<% user.username %>">
+       value="<%=user.username%>">
 
 <br>
 
 <label for="password">Password: </label>
 <input type="password" id="password"
-       name="user[password]"
-       value="<% user.password %>">
+       name="user[password]">
 
 <br>
 
