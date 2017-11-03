@@ -52,3 +52,15 @@ Elephant.paradeHelper = function(elephant) {
 };
 
 herd.forEach(name => Elephant.paradeHelper(name));
+
+function dinerBreakfast() {
+  let order = "I'd like cheesy scrambled eggs please";
+
+  return function(food) {
+    order = order.slice(0, order.length - 8);
+    console.log(`${order} and ${food} please`);
+  };
+}
+
+ let bfastOrder = dinerBreakfast();
+ bfastOrder("chocolate chip pancakes");
