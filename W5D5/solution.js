@@ -30,7 +30,7 @@ function teaAndBiscuits () {
     console.log(`You replied ${res}.`);
     reader.question('Would you like some biscuits?', function (res2) {
       console.log(`You replied ${res2}.`);
-      
+
       const first = (res === 'yes') ? 'do' : 'don\'t';
       const second = (res2 === 'yes') ? 'do' : 'don\'t';
 
@@ -53,7 +53,7 @@ function Dog () {
 }
 
 Dog.prototype.chase = function (cat) {
-  console.log(`My name is ${this.name} and I'm chasing ${cat.name}! Woof!`)
+  console.log(`My name is ${this.name} and I'm chasing ${cat.name}! Woof!`);
 };
 
 const Markov = new Cat ();
